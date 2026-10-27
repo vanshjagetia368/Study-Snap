@@ -123,7 +123,7 @@ static async retrieveContext(fileId,query){
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile",
+      model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
       temperature: 0.1, // LOW temperature is critical to prevent generic "hallucinations"
       response_format: { "type": "json_object" }
     });
@@ -154,7 +154,7 @@ static async generateQuiz(fileId, userQuery) {
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile",
+      model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
       temperature: 0.2, 
       response_format: { "type": "json_object" }
     });
@@ -196,7 +196,7 @@ static async generateQaSet(fileId, userQuery, marksDistribution) {
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile",
+      model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
       temperature: 0.1,
       max_completion_tokens: 4096,
       response_format: { "type": "json_object" }
