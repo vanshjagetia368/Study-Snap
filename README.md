@@ -23,10 +23,13 @@ Transform unstructured study notes, textbook chapters, and syllabus PDFs into in
 <!-- Media Badges: Video & Drive Links -->
 <p align="center">
   <a href="https://www.youtube.com/watch?v=jc-SEWqL3JQ" target="_blank">
-    <img src="https://img.shields.io/badge/🎥%20Video%20Demo-Watch%20Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Video Demo">
+    <img src="https://img.shields.io/badge/🎥%20YouTube%20Demo-Watch%20Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Demo">
+  </a>
+  <a href="https://drive.google.com/file/d/sample-video-tutorial-link/view" target="_blank">
+    <img src="https://img.shields.io/badge/📹%20Google%20Drive%20Video-Tutorial%20%26%20Explanation-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive Video Tutorial">
   </a>
   <a href="https://drive.google.com/drive/folders/sample-studysnap-docs" target="_blank">
-    <img src="https://img.shields.io/badge/📂%20Sample%20Notes-Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Sample Drive Link">
+    <img src="https://img.shields.io/badge/📂%20Google%20Drive-Sample%20Study%20Notes-34A853?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive Sample Notes">
   </a>
 </p>
 
@@ -56,16 +59,22 @@ Transform unstructured study notes, textbook chapters, and syllabus PDFs into in
 
 ---
 
-## 🌐 Live Deployments & Endpoints
+## 🌐 Live Deployments & Essential Links Hub
 
-All services are deployed and orchestrated on **Render Cloud** in high-availability mode with automated health monitoring:
+All services are deployed and orchestrated on **Render Cloud** in high-availability mode, with complete demonstration videos and sample document drives linked below:
 
-| Component | Service Type | Deployment URL | Healthcheck / Status |
+| Resource / Service | Type | Live URL / Access Link | Status & Description |
 | :--- | :--- | :--- | :--- |
-| **Frontend UI** | Static Site (CDN) | [`https://studysnap-frontend-ca13.onrender.com`](https://studysnap-frontend-ca13.onrender.com/) | Global Edge CDN (Always Online) |
-| **Backend API Gateway** | Node/Express Web Service | [`https://studysnap-backend-xcjg.onrender.com`](https://studysnap-backend-xcjg.onrender.com/) | [`/health`](https://studysnap-backend-xcjg.onrender.com/health) (JSON `{ "ok": true }`) |
-| **AI Processing Microservice** | Python/FastAPI Web Service | [`https://studysnap-ai-w7ss.onrender.com`](https://studysnap-ai-w7ss.onrender.com/) | [`/health`](https://studysnap-ai-w7ss.onrender.com/health) (JSON `{ "ok": true }`) |
-| **Sample Material Hub** | Document Drive | [`Sample Study Notes`](https://drive.google.com/drive/folders/sample-studysnap-docs) | Verified PDF test sheets |
+| **🚀 Frontend Web Application** | Static Site (CDN) | [`https://studysnap-frontend-ca13.onrender.com`](https://studysnap-frontend-ca13.onrender.com/) | Live Production User Interface |
+| **📡 Backend API Gateway** | Node / Express | [`https://studysnap-backend-xcjg.onrender.com`](https://studysnap-backend-xcjg.onrender.com/) | Live ([`/health`](https://studysnap-backend-xcjg.onrender.com/health) returns `{ "ok": true }`) |
+| **🧠 AI Processing Microservice** | Python / FastAPI | [`https://studysnap-ai-w7ss.onrender.com`](https://studysnap-ai-w7ss.onrender.com/) | Live ([`/health`](https://studysnap-ai-w7ss.onrender.com/health) returns `{ "ok": true }`) |
+| **📹 Video Explanation (Google Drive)** | Video Tutorial | [`Google Drive Video Tutorial Link`](https://drive.google.com/file/d/sample-video-tutorial-link/view) | High-definition live video walkthrough |
+| **🎥 Video Walkthrough (YouTube)** | YouTube Video | [`YouTube Technical Demo`](https://www.youtube.com/watch?v=jc-SEWqL3JQ) | Full feature showcase demo |
+| **📂 Sample Study Material (Google Drive)**| Documents Drive | [`Google Drive Sample Notes Folder`](https://drive.google.com/drive/folders/sample-studysnap-docs) | Pre-verified PDFs for testing generation |
+
+> 📌 **Direct Google Drive Access Points**:
+> * **Google Drive Video Tutorial & Explanation**: [`https://drive.google.com/file/d/sample-video-tutorial-link/view`](https://drive.google.com/file/d/sample-video-tutorial-link/view)
+> * **Google Drive Sample Documents & Notes**: [`https://drive.google.com/drive/folders/sample-studysnap-docs`](https://drive.google.com/drive/folders/sample-studysnap-docs)
 
 ---
 
