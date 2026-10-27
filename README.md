@@ -22,14 +22,8 @@ Transform unstructured study notes, textbook chapters, and syllabus PDFs into in
 
 <!-- Media Badges: Video & Drive Links -->
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=jc-SEWqL3JQ" target="_blank">
-    <img src="https://img.shields.io/badge/🎥%20YouTube%20Demo-Watch%20Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Demo">
-  </a>
-  <a href="https://drive.google.com/file/d/sample-video-tutorial-link/view" target="_blank">
-    <img src="https://img.shields.io/badge/📹%20Google%20Drive%20Video-Tutorial%20%26%20Explanation-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive Video Tutorial">
-  </a>
-  <a href="https://drive.google.com/drive/folders/sample-studysnap-docs" target="_blank">
-    <img src="https://img.shields.io/badge/📂%20Google%20Drive-Sample%20Study%20Notes-34A853?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive Sample Notes">
+  <a href="https://drive.google.com/file/d/1ebf00kUxtAU6eObX5jFAzNyuxHXRQo1L/view?usp=sharing" target="_blank">
+    <img src="https://img.shields.io/badge/📹%20Google%20Drive-Video%20Walkthrough-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive Video Walkthrough">
   </a>
 </p>
 
@@ -49,32 +43,23 @@ Transform unstructured study notes, textbook chapters, and syllabus PDFs into in
 
 ---
 
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=jc-SEWqL3JQ" target="_blank">
-    <img src="https://img.youtube.com/vi/jc-SEWqL3JQ/maxresdefault.jpg" width="850" alt="StudySnap Technical Demo Video" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-  </a>
-</p>
-
 </div>
 
 ---
 
 ## 🌐 Live Deployments & Essential Links Hub
 
-All services are deployed and orchestrated on **Render Cloud** in high-availability mode, with complete demonstration videos and sample document drives linked below:
+All services are deployed and orchestrated on **Render Cloud** in high-availability mode, with the demonstration video linked below:
 
 | Resource / Service | Type | Live URL / Access Link | Status & Description |
 | :--- | :--- | :--- | :--- |
 | **🚀 Frontend Web Application** | Static Site (CDN) | [`https://studysnap-frontend-ca13.onrender.com`](https://studysnap-frontend-ca13.onrender.com/) | Live Production User Interface |
 | **📡 Backend API Gateway** | Node / Express | [`https://studysnap-backend-xcjg.onrender.com`](https://studysnap-backend-xcjg.onrender.com/) | Live ([`/health`](https://studysnap-backend-xcjg.onrender.com/health) returns `{ "ok": true }`) |
 | **🧠 AI Processing Microservice** | Python / FastAPI | [`https://studysnap-ai-w7ss.onrender.com`](https://studysnap-ai-w7ss.onrender.com/) | Live ([`/health`](https://studysnap-ai-w7ss.onrender.com/health) returns `{ "ok": true }`) |
-| **📹 Video Explanation (Google Drive)** | Video Tutorial | [`Google Drive Video Tutorial Link`](https://drive.google.com/file/d/sample-video-tutorial-link/view) | High-definition live video walkthrough |
-| **🎥 Video Walkthrough (YouTube)** | YouTube Video | [`YouTube Technical Demo`](https://www.youtube.com/watch?v=jc-SEWqL3JQ) | Full feature showcase demo |
-| **📂 Sample Study Material (Google Drive)**| Documents Drive | [`Google Drive Sample Notes Folder`](https://drive.google.com/drive/folders/sample-studysnap-docs) | Pre-verified PDFs for testing generation |
+| **📹 Video Walkthrough (Google Drive)** | Video Tutorial | [`Google Drive Video Walkthrough`](https://drive.google.com/file/d/1ebf00kUxtAU6eObX5jFAzNyuxHXRQo1L/view?usp=sharing) | High-definition live video walkthrough |
 
-> 📌 **Direct Google Drive Access Points**:
-> * **Google Drive Video Tutorial & Explanation**: [`https://drive.google.com/file/d/sample-video-tutorial-link/view`](https://drive.google.com/file/d/sample-video-tutorial-link/view)
-> * **Google Drive Sample Documents & Notes**: [`https://drive.google.com/drive/folders/sample-studysnap-docs`](https://drive.google.com/drive/folders/sample-studysnap-docs)
+> 📌 **Direct Google Drive Access Point**:
+> * **Google Drive Video Walkthrough**: [`https://drive.google.com/file/d/1ebf00kUxtAU6eObX5jFAzNyuxHXRQo1L/view?usp=sharing`](https://drive.google.com/file/d/1ebf00kUxtAU6eObX5jFAzNyuxHXRQo1L/view?usp=sharing)
 
 ---
 
