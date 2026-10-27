@@ -1,0 +1,175 @@
+const QaSet = require('../models/qaSet.model');
+const PDFDocument = require('pdfkit');
+const { AiFastApiError, indexPdf, generateQa } = require('../services/aiFastApi.client');
+const { syncGenerationDoc, syncGenerationCollection } = require('../services/generationProgress.service');
+
+function mapAiError(err) {
+  if (err instanceof AiFastApiError) {
+    if (err.code === 'CONFIG') return { status: 500, message: err.message, code: err.code, details: err.details };
+    if (err.code === 'TIMEOUT') return { status: 504, message: err.message, code: err.code, details: err.details };
+    if (err.code === 'UNREACHABLE') return { status: 503, message: err.message, code: err.code, details: err.details };
+    if (err.code === 'AI_SERVICE_RATE_LIMIT') return { status: 429, message: err.message, code: err.code, details: err.details, upstreamStatus: err.status };
+    return { status: 502, message: err.message, code: err.code, details: err.details, upstreamStatus: err.status };
+  }
+  return { status: 503, message: 'AI service unreachable' };
+}
+
+exports.processPdfForQa = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded.' });
+    }
+const userId = req.user.id;
+    const fileId = req.file.originalname;
+    const { chunkCount } = await indexPdf({
+      userId,
+      fileId,
+      filename: req.file.originalname,
+      pdfBuffer: req.file.buffer,
+    });
+res.status(200).json({ fileId, chunkCount, message: "Ready for Q&A generation" });
+ 
+  } catch (error) {
+    console.error('Error processing PDF for Q&A:', error);
+    const mapped = mapAiError(error);
+    res.status(mapped.status).json({
+      message: mapped.message,
+      code: mapped.code,
+      upstreamStatus: mapped.upstreamStatus,
+      details: mapped.details,
+    });
+  }
+};
+
+exports.generateQaSet = async (req, res) => {
+  try {
+    const { fileId, prompt, marksDistribution } = req.body;
+
+    if (!fileId || !prompt || !marksDistribution) {
+      return res.status(400).json({ message: 'fileId, prompt, and marksDistribution are required.' });
+    }
+    
+    // Basic validation for marksDistribution
+    if (typeof marksDistribution !== 'object' || Object.keys(marksDistribution).length === 0) {
+        return res.status(400).json({ message: 'marksDistribution must be a non-empty object.' });
+    }
+
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'User authentication required.' });
+    }
+
+
+    // Generate Q&A data using the AI service
+    const taskInfo = await generateQa({
+      userId: req.user.id,
+      fileId,
+      prompt,
+      marksDistribution,
+    });
+
+    // Create a new Q&A Set document
+    const newQaSet = new QaSet({ 
+      userId: req.user.id,
+      sourceFileId: fileId,
+      topic: prompt, 
+      questions: [],
+      taskId: taskInfo.taskId,
+      progress: 5,
+      progressMessage: taskInfo.message || 'Preparing Q&A generation',
+    });
+
+    await newQaSet.save({ validateBeforeSave: false });
+    console.log('Q&A Set saved successfully:', newQaSet._id);
+
+    res.status(201).json(newQaSet);
+  } catch (error) {
+    console.error('Error generating Q&A set:', {
+      message: error.message,
+      stack: error.stack,
+    });
+    const mapped = mapAiError(error);
+    res.status(mapped.status).json({
+      message: mapped.message,
+      error: error.message,
+      code: mapped.code,
+      upstreamStatus: mapped.upstreamStatus,
+      details: mapped.details,
+    });
+  }
+};
+
+exports.getQaSets = async (req, res) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'User authentication required.' });
+    }
+
+    const sets = await QaSet.find({ userId: req.user.id }).sort({ createdAt: -1 });
+    await syncGenerationCollection(sets, { documentField: 'questions' });
+    res.status(200).json(sets);
+  } catch (error) {
+    console.error('Error fetching Q&A sets:', error);
+    res.status(500).json({ message: 'Failed to fetch Q&A sets.' });
+  }
+};
+
+exports.getQaSetById = async (req, res) => {
+  try {
+    const qaSet = await QaSet.findOne({ _id: req.params.id, userId: req.user.id });
+    if (!qaSet) {
+      return res.status(404).json({ message: 'Q&A set not found.' });
+    }
+
+    await syncGenerationDoc(qaSet, { documentField: 'questions' });
+    res.status(200).json(qaSet);
+  } catch (error) {
+    console.error('Error fetching Q&A set:', error);
+    res.status(500).json({ message: 'Failed to fetch Q&A set.' });
+  }
+};
+
+
+exports.generateQaPdf = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'User authentication required.' });
+    }
+
+    const qaSet = await QaSet.findOne({ _id: id, userId: req.user.id });
+
+    if (!qaSet) {
+      return res.status(404).json({ message: 'Q&A Set not found or you do not have permission to access it.' });
+    }
+
+    const doc = new PDFDocument({ margin: 50 });
+
+    // Set headers for PDF download
+    const filename = `${qaSet.topic.replace(/\s+/g, '_')}_QA.pdf`;
+    res.setHeader('Content-disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Content-type', 'application/pdf');
+
+    // Pipe PDF document to response
+    doc.pipe(res);
+
+    // Add content
+    doc.fontSize(20).font('Helvetica-Bold').text(qaSet.topic, { align: 'center' });
+    doc.moveDown(2);
+
+    qaSet.questions.forEach((qa, index) => {
+      doc.fontSize(14).font('Helvetica-Bold').text(`Q${index + 1}: ${qa.question} [${qa.marks} Marks]`);
+      doc.moveDown(0.5);
+      doc.fontSize(12).font('Helvetica').text(`Answer: ${qa.answer}`, {
+          align: 'justify'
+      });
+      doc.moveDown(1.5);
+    });
+
+    // Finalize the PDF and end the stream
+    doc.end();
+
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    res.status(500).json({ message: 'Failed to generate PDF.' });
+  }
+};
